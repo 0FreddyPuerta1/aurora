@@ -1,0 +1,35 @@
+# Dependencias de Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Entorno
+.env
+
+# Logs
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Directorios de sistema
+.DS_Store
+Thumbs.db
+
+# Compilaciones
+dist/
+build/
+out/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Directorios de prueba
+coverage/
