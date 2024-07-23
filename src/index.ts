@@ -3,10 +3,11 @@ import cors from "cors";
 import helmet from "helmet";
 import "dotenv/config";
 import userRoutes from "./routes/userRoutes";
-
+import initializeDatabase from "./utils/dbInit";
 export const server = express();
 
 const createServer = async () => {
+  await initializeDatabase();
   const corsOptions = {
     origin: ["*"],
     credentials: true,
