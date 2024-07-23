@@ -3,7 +3,6 @@ import { IUser } from '../interfaces/user.interface';
 import { userService } from '../services/user.service';
 import { ValidationError } from '../errors/ValidationError';
 import { ILogin } from '../interfaces/loginform.interface';
-import { ConnectionError } from '../errors/ConnectionError';
 
 const userServices = new userService();
 export class userController {
@@ -56,12 +55,13 @@ export class userController {
       const user = await userServices.loginUser(loginForm);
 
       if (user) {
-        res.status(200).json(user);
+        res.status(200).cookie('token', user.token).json(user.user);
       } else {
         res.status(404).send('email o contraseña incorrectos.');
       }
     } catch (error) {
       res.status(500).send('Error interno del servidor');
+      next();
     }
   }
 }

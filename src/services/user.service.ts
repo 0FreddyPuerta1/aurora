@@ -1,9 +1,11 @@
+import bcrypt from 'bcrypt';
+import jwt, { Secret } from 'jsonwebtoken';
+import 'dotenv/config';
 import { ConnectionError } from '../errors/ConnectionError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { ILogin } from '../interfaces/loginform.interface';
 import { IUser } from '../interfaces/user.interface';
 import { User } from '../models/User';
-import bcrypt from 'bcrypt';
 export class userService {
   async registerUser(userData: IUser): Promise<User | undefined> {
     try {
@@ -20,7 +22,9 @@ export class userService {
     }
   }
 
-  async loginUser(loginForm: ILogin): Promise<User | undefined> {
+  async loginUser(
+    loginForm: ILogin
+  ): Promise<{ user: User; token: string } | undefined> {
     try {
       const user = await User.findOne({
         where: { email: loginForm.email },
@@ -35,10 +39,15 @@ export class userService {
       if (!isPasswordValid) {
         throw new NotFoundError('Email o contraseña incorrectos');
       }
-      return user;
+      const SECRET_KEY: Secret = process.env.SECRET_KEY || '';
+      const token = jwt.sign({ userId: user.id, name: user.name }, SECRET_KEY, {
+        expiresIn: '2 days',
+      });
+
+      return { user: user, token: token };
     } catch (error) {
       if (error instanceof ConnectionError) {
-        throw new ConnectionError('Errror de conexion con la base de datos');
+        throw new ConnectionError('Error de conexion con la base de datos');
       }
     }
   }

@@ -5,12 +5,10 @@ import {
   Table,
   BeforeCreate,
   BeforeUpdate,
-  BeforeFind,
   AfterFind,
 } from 'sequelize-typescript';
 import { IUser } from '../interfaces/user.interface';
 import bcrypt from 'bcrypt';
-import sequelize from '../config/database';
 
 @Table({
   timestamps: true,
@@ -30,7 +28,7 @@ export class User extends Model<IUser> implements IUser {
     type: DataType.JSON,
     allowNull: false,
   })
-  privileges!: {};
+  privileges!: object;
 
   @BeforeCreate
   @BeforeUpdate
