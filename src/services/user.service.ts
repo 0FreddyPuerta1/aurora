@@ -6,7 +6,7 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { ILogin } from '../interfaces/loginform.interface';
 import { IUser } from '../interfaces/user.interface';
 import { User } from '../models/User';
-export class userService {
+export class UserService {
   async registerUser(userData: IUser): Promise<User | undefined> {
     try {
       const user = await User.create(userData);

@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { IUser } from '../interfaces/user.interface';
-import { userService } from '../services/user.service';
+import { UserService } from '../services/user.service';
 import { ValidationError } from '../errors/ValidationError';
 import { ILogin } from '../interfaces/loginform.interface';
 
-const userServices = new userService();
-export class userController {
+const userServices = new UserService();
+export class UserController {
   async registerUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { name, email, password, role, privileges } = req.body;
@@ -31,14 +31,12 @@ export class userController {
         );
       }
       const user = await userServices.registerUser(userData);
-      if (user) {
-        res.status(201).json(user);
-      }
+      res.status(201).json(user);
     } catch (error) {
       if (error instanceof ValidationError) {
         return res.status(400).json({ message: error.message });
       }
-      next();
+      next(error);
     }
   }
 
