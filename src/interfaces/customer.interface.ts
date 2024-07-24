@@ -2,7 +2,7 @@ export interface ICustomer {
   customerId?: number;
   name: string;
   idType: string;
-  idNUmber: string;
+  idNumber: string;
   address: string;
   phone: string;
   email: string;

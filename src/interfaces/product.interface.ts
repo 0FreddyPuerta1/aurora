@@ -7,4 +7,6 @@ export interface IProduct {
   quantityInStock: number;
   providerId: number;
   imageUrl: string;
+  reference: string;
+  ivaCategory: string;
 }

@@ -17,4 +17,9 @@ export class Product extends Model<IProduct> {
   @Column({ type: DataType.DOUBLE, allowNull: false }) quantityInStock!: number;
 
   @Column({ type: DataType.INTEGER, allowNull: false }) providerId!: number;
+
+  @Column({ type: DataType.STRING, allowNull: false, unique: true })
+  reference!: string;
+  @Column({ type: DataType.STRING, allowNull: false })
+  ivaCategory!: string;
 }
